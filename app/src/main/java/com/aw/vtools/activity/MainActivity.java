@@ -8,10 +8,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.aw.vtools.R;
 import com.aw.vtools.mock.MockData;
+import com.aw.vtools.model.QMUIGroupModel;
 import com.aw.vtools.util.ToastUtil;
 import com.aw.vtools.view.QMUIGroupListCustomView;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,11 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
         groupListView = findViewById(R.id.groupListView);
         QMUIGroupListCustomView groupListView = new QMUIGroupListCustomView(this);
-        groupListView.newSection(MockData.mockIndexData(), this.groupListView, new View.OnClickListener() {
+        List<QMUIGroupModel> qmuiGroupModels = MockData.mockIndexData();
+        groupListView.newSection(qmuiGroupModels, this.groupListView, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 QMUICommonListItemView viewList = (QMUICommonListItemView) v;
-                ToastUtil.showShort(MainActivity.this, "选项：" + viewList.getTag() + " 点击了");
+                String[] split = StringUtils.split((String) viewList.getTag(), "#");
+                Integer parentIndex = Integer.valueOf(split[0]);
+                Integer itemIndex = Integer.valueOf(split[1]);
+                ToastUtil.showShort(MainActivity.this, "选项：" + qmuiGroupModels.get(parentIndex).getTitle()+"-"+viewList.getText() + " 点击了");
             }
         });
     }

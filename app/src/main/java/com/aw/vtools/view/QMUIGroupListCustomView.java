@@ -31,7 +31,7 @@ public class QMUIGroupListCustomView extends View{
             for (QMUIGroupItemModel item : model.getItemModels()) {
                 QMUICommonListItemView itemView = groupListView.createItemView(item.getItemTitle());
                 itemView.setDetailText(item.getContent());
-                itemView.setTag( model.getItemModels().indexOf(item));
+                itemView.setTag(modelList.indexOf(model)+"#"+model.getItemModels().indexOf(item));
                 itemView.setAccessoryType(item.getAccessoryType());
                 section.addItemView(itemView,listener);
             }
